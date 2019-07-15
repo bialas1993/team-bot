@@ -13,8 +13,6 @@ client = slack.WebClient(token=SLACK_TOKEN)
 
 if __name__ == "__main__":
     j = Jira()
-
-
     print("tasks", ', '.join([x.key for _, x in enumerate(j.filter())]))
 
     response = client.chat_postMessage(

@@ -5,6 +5,7 @@ Slack bot for team integration
 ```shell
 virtualenv env
 source ./env/bin/activate
+pip install -r requirements.txt
 ```
 
 # Run
