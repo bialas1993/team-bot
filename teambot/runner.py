@@ -10,7 +10,6 @@ from tasks.jira import Jira
 from notifier.notifier import Notifier
 from notifier.client.slack import SlackClient
 
-
 load_dotenv()
 pp = pprint.PrettyPrinter(indent=4)
 
