@@ -9,7 +9,7 @@ class SlackClient(NotifyClient):
     def send(self, msg):
         print("sending to slack")
         response = self.__client.chat_postMessage(
-            channel='#1234test1234',
+            channel=os.getenv('SLACK_CHANNEL'),
             text=msg
         )
         assert response["ok"]
