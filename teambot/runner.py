@@ -45,7 +45,9 @@ if __name__ == "__main__":
         user_index = 0
     
     j = Jira()
-    tasks = ', '.join(["<" + os.getenv('JIRA_URL') + x.key + "|" + x.key + ">" for _, x in enumerate(j.filter())])
+    issues = j.filter()
+
+    tasks = ', '.join(["<" + os.getenv('JIRA_URL') + x.key + "|" + x.key + ">" for _, x in enumerate(issues)])
     
     user_index = user_index+1
     if user_index >= len(users):
@@ -54,7 +56,12 @@ if __name__ == "__main__":
     notifier = Notifier()
     notifier.register(SlackClient())
 
-    msg = 'Dziś testuje {0}.\nDo testów z wczoraj: {1}'.format(users[user_index]['real_name'], tasks)  
+    msg = 'Dziś testuje {0}.\n'.format(users[user_index]['real_name'])
+    if len(issues) > 0:
+        msg += 'Do testów z wczoraj: {0}'.format(tasks)  
+    else:
+        msg += 'Brak zadań do testów.'
+    print(msg)
     notifier.send(msg)
 
     save_user_index(user_index)
