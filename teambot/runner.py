@@ -14,6 +14,7 @@ load_dotenv()
 SLACK_TOKEN=os.getenv('SLACK_TOKEN')
 client = slack.WebClient(token=SLACK_TOKEN)
 
+ignored_users = ['UFD83E5DK', 'UL81PMD33']
 
 def list_users(channel):
     request = client.api_call("conversations.members", params={'channel': channel})
@@ -39,20 +40,24 @@ def save_user_index(index):
 
 if __name__ == "__main__":
     users = list_users(os.getenv('SLACK_CHANNEL'))
+
     try:
         user_index = int(load_user_index())
     except:
         user_index = 0
-    
+
     j = Jira()
     issues = j.filter()
-
     tasks = ', '.join(["<" + os.getenv('JIRA_URL') + x.key + "|" + x.key + ">" for _, x in enumerate(issues)])
     
-    user_index = user_index+1
-    if user_index >= len(users):
-        user_index = 0
-
+    while True:
+        user_index = user_index+1
+        if user_index >= len(users):
+            user_index = 0
+        
+        if users[user_index]['id'] not in ignored_users:
+            break
+    
     notifier = Notifier()
     notifier.register(SlackClient())
 
