@@ -13,5 +13,8 @@ gunicorn = "==19.9.0"
 Flask = "*"
 Flask-Cors = "*"
 
+[scripts]
+notify = "python teambot/runner.py"
+
 [requires]
 python_version = "3.7"
