@@ -51,7 +51,7 @@ if __name__ == "__main__":
 
     j = Jira()
     issues = j.filter()
-    tasks = ', '.join(["<" + os.getenv('JIRA_URL') + x.key + "|" + x.key + ">" for _, x in enumerate(issues)])
+    tasks = ', '.join(["<" + os.getenv('JIRA_URL') + 'browse/' + x.key + "|" + x.key + ">" for _, x in enumerate(issues)])
     
     while True:
         user_index = user_index+1
